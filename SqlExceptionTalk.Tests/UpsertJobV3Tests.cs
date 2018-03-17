@@ -8,6 +8,9 @@ using Xunit.Abstractions;
 
 namespace SqlExceptionTalk.Tests
 {
+    /// <summary>
+    /// Tests for Stored Procedure WITH both soft and hard error handling.
+    /// </summary>
     public class UpsertJobV3Tests : IDisposable
     {
         #region Setup and Tear Down Tests
@@ -28,29 +31,6 @@ namespace SqlExceptionTalk.Tests
         #endregion
 
         [Fact]
-        public void UpsertJobV3_AddNewUniqueJob()
-        {
-            //Arrange
-            var messageList = new List<string>();
-            var newJob = new JobDataModel
-            {
-                Id = null,
-                Name = "New Unique Job #1",
-                Type = "Electrical",
-                Date = DateTime.Parse("2018-04-01"),
-                Amount = 125.00M
-            };
-
-            //Act
-            var newId = SqlData.UpsertJobV3(newJob, out messageList);
-            _outputHelper.WriteLine("[INFO] New job created with Id = {0}", 
-                newId?.ToString() ?? "null");
-
-            //Assert
-            Assert.NotNull(newId);
-        }
-
-        [Fact]
         public void UpsertJobV3_AddNewJobWithDuplicateName()
         {
             //Arrange
@@ -65,19 +45,19 @@ namespace SqlExceptionTalk.Tests
             };
 
             //Act & Assert
-            int? newId;
+            int? newId = null;
             var sqlException = Assert.Throws<SqlException>(() =>
             {
                 newId = SqlData.UpsertJobV3(newJob, out messageList);
             });
 
-            _outputHelper.WriteLine("[ERROR] Class: {0}; State: {1}; Message: {2}", 
-                sqlException.Class, sqlException.State, sqlException.Message);
+            _outputHelper.LogExceptionAccordingly(sqlException);
 
             //Assert
-            Assert.Equal(14, sqlException.Class);
-            Assert.Equal(1, sqlException.State);
-            Assert.Contains("Cannot insert duplicate key row", sqlException.Message);
+            Assert.Null(newId);
+            Assert.Equal(12, sqlException.Class);
+            Assert.Equal(255, sqlException.State);
+            Assert.Equal("A Job with name [New Unique Job #1] already exists.", sqlException.Message);
         }
 
     }

@@ -7,6 +7,9 @@ using Xunit.Abstractions;
 
 namespace SqlExceptionTalk.Tests
 {
+    /// <summary>
+    /// Tests for Stored Procedure without error handling.
+    /// </summary>
     public class UpsertJobTests : IDisposable
     {
         #region Setup and Tear Down Tests
@@ -62,16 +65,16 @@ namespace SqlExceptionTalk.Tests
             };
 
             //Act & Assert
-            int? newId;
+            int? newId = null;
             var sqlException = Assert.Throws<SqlException>(() =>
             {
                 newId = SqlData.UpsertJob(newJob);
             });
 
-            _outputHelper.WriteLine("[ERROR] Class: {0}; State: {1}; Message: {2}", 
-                sqlException.Class, sqlException.State, sqlException.Message);
+            _outputHelper.LogExceptionAccordingly(sqlException);
 
             //Assert
+            Assert.Null(newId);
             Assert.Equal(14, sqlException.Class);
             Assert.Equal(1, sqlException.State);
             Assert.Contains("Cannot insert duplicate key row", sqlException.Message);
