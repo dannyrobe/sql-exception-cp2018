@@ -4,6 +4,7 @@ using Xunit;
 using SqlExceptionTalk.Data;
 using SqlExceptionTalk.Models;
 using Xunit.Abstractions;
+using static SqlExceptionTalk.Tests.XunitTestPriority;
 
 namespace SqlExceptionTalk.Tests
 {
@@ -29,9 +30,12 @@ namespace SqlExceptionTalk.Tests
 
         #endregion
 
-        [Fact]
+        [Fact, TestPriority(1)]
         public void UpsertJob_AddNewUniqueJob()
         {
+            // reset database for test
+            SqlData.DeleteJob("New Unique Job #1");
+
             //Arrange
             var newJob = new JobDataModel
             {
@@ -51,8 +55,8 @@ namespace SqlExceptionTalk.Tests
             Assert.NotNull(newId);
         }
 
-        [Fact]
-        public void UpsertJob_AddNewJobWithDuplicateName()
+        [Fact, TestPriority(2)]
+        public void UpsertJob_AddNewJobWithDuplicateName() // must run UpsertJob_AddNewUniqueJob() before this test
         {
             //Arrange
             var newJob = new JobDataModel

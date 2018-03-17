@@ -151,5 +151,33 @@ namespace SqlExceptionTalk.Data
                 }
             }
         }
+
+        public static void DeleteJob(string jobName)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                var trxn = conn.BeginTransaction();
+
+                try
+                {
+                    using (var cmd = new SqlCommand("DELETE FROM dbo.job WHERE job_name = @job_name", conn, trxn))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Parameters.AddWithValue("job_name", jobName);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    trxn.Commit();
+                }
+                catch (Exception)
+                {
+                    trxn.Rollback();
+
+                    throw;
+                }
+            }
+        }
     }
 }
