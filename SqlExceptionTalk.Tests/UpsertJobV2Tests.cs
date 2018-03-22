@@ -20,7 +20,7 @@ namespace SqlExceptionTalk.Tests
         public UpsertJobV2Tests(ITestOutputHelper outputHelper)
         {
             _outputHelper = outputHelper;
-            _outputHelper.WriteLine("[TRACE] Starting a tests...");
+            _outputHelper.WriteLine("[TRACE] Starting tests...");
 
             // reset database for test
             SqlData.DeleteJobType("Roofing");

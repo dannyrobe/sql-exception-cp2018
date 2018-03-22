@@ -20,7 +20,7 @@ namespace SqlExceptionTalk.Tests
         public UpsertJobV3Tests(ITestOutputHelper outputHelper)
         {
             _outputHelper = outputHelper;
-            _outputHelper.WriteLine("[TRACE] Starting a tests...");
+            _outputHelper.WriteLine("[TRACE] Starting tests...");
         }
 
         public void Dispose()
