@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using Xunit;
 using SqlExceptionTalk.Data;
 using SqlExceptionTalk.Models;
+using SqlExceptionTalk.Tests.Support;
 using Xunit.Abstractions;
 
 namespace SqlExceptionTalk.Tests

@@ -3,8 +3,9 @@ using System.Data.SqlClient;
 using Xunit;
 using SqlExceptionTalk.Data;
 using SqlExceptionTalk.Models;
+using SqlExceptionTalk.Tests.Support;
 using Xunit.Abstractions;
-using static SqlExceptionTalk.Tests.XunitTestPriority;
+using static SqlExceptionTalk.Tests.Support.XunitTestPriority;
 
 namespace SqlExceptionTalk.Tests
 {

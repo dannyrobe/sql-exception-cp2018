@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using Xunit.Abstractions;
 
-namespace SqlExceptionTalk.Tests
+namespace SqlExceptionTalk.Tests.Support
 {
     public static class TestOutputHelperExtensions
     {

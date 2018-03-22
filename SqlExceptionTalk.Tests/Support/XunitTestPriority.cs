@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace SqlExceptionTalk.Tests
+namespace SqlExceptionTalk.Tests.Support
 {
     public class XunitTestPriority
     {
