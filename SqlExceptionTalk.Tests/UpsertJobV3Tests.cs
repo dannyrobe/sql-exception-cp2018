@@ -51,13 +51,15 @@ namespace SqlExceptionTalk.Tests
                 newId = SqlData.UpsertJobV3(newJob, out messageList);
             });
 
-            _outputHelper.LogExceptionAccordingly(sqlException);
+            var message = _outputHelper.LogExceptionAccordingly(sqlException)
+                          ?? "Generic error message.";
 
             //Assert
             Assert.Null(newId);
             Assert.Equal(12, sqlException.Class);
             Assert.Equal(255, sqlException.State);
-            Assert.Equal("A Job with name [New Unique Job #1] already exists.", sqlException.Message);
+            Assert.Empty(messageList);
+            Assert.Equal("A Job with name [New Unique Job #1] already exists.", message);
         }
 
     }

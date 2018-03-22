@@ -6,14 +6,21 @@ namespace SqlExceptionTalk.Tests
 {
     public static class TestOutputHelperExtensions
     {
-        public static void LogExceptionAccordingly(this ITestOutputHelper testOutputHelper, Exception exception)
+        /// <summary>
+        /// Log the specific SqlException as WARN and return message, or log Exception as ERROR and return null.
+        /// </summary>
+        /// <param name="testOutputHelper">The test output helper.</param>
+        /// <param name="exception">The exception.</param>
+        /// <returns>Error message if specified SqlException, else null.</returns>
+        public static string LogExceptionAccordingly(this ITestOutputHelper testOutputHelper, Exception exception)
         {
-            var sqlException = exception as SqlException;
+            string message = null;
 
-            if (sqlException != null)
+            if (exception is SqlException sqlException)
             {
                 if (sqlException.Class == 12 && sqlException.State == 255)
                 {
+                    message = sqlException.Message;
                     testOutputHelper.WriteLine($"[WARN] {sqlException.Message}");
                 }
                 else
@@ -25,6 +32,8 @@ namespace SqlExceptionTalk.Tests
             {
                 testOutputHelper.WriteLine($"[ERROR] {exception.Message}");
             }
+
+            return message;
         }
     }
 }

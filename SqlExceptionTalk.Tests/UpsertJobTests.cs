@@ -75,12 +75,14 @@ namespace SqlExceptionTalk.Tests
                 newId = SqlData.UpsertJob(newJob);
             });
 
-            _outputHelper.LogExceptionAccordingly(sqlException);
+            var message = _outputHelper.LogExceptionAccordingly(sqlException)
+                ?? "Generic error message.";
 
             //Assert
             Assert.Null(newId);
             Assert.Equal(14, sqlException.Class);
             Assert.Equal(1, sqlException.State);
+            Assert.Equal("Generic error message.", message);
             Assert.Contains("Cannot insert duplicate key row", sqlException.Message);
         }
 
