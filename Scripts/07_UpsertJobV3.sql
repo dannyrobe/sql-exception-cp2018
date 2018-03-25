@@ -31,10 +31,10 @@ AS
 	BEGIN TRY
 	
 		IF (EXISTS(
-			SELECT TOP 1 'here'
+			SELECT TOP(1) 'here'
 			FROM dbo.job AS j
 			WHERE j.job_name = @job_name
-				AND (@job_id IS NULL OR j.job_id != @job_id)
+				AND (@job_id IS NULL OR j.job_id <> @job_id)
 		))
 		BEGIN
 			

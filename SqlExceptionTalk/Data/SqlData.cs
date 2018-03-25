@@ -44,6 +44,7 @@ namespace SqlExceptionTalk.Data
             {
                 conn.Open();
 
+                // A word of caution: this will also capture 'PRINT' lines from SQL
                 conn.InfoMessage += (sender, args) =>
                 {
                     messageList.Add(args.Message);

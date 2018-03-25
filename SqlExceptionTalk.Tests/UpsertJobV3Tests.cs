@@ -47,16 +47,24 @@ namespace SqlExceptionTalk.Tests
 
             //Act & Assert
             int? newId = null;
-            var sqlException = Assert.Throws<SqlException>(() =>
+            string message = null;
+            SqlException sqlException = null;
+
+            try
             {
                 newId = SqlData.UpsertJobV3(newJob, out messageList);
-            });
-
-            var message = _outputHelper.LogExceptionAccordingly(sqlException)
+            }
+            catch (Exception e)
+            {
+                message = _outputHelper.LogExceptionAccordingly(e)
                           ?? "Generic error message.";
+
+                sqlException = e as SqlException;
+            }
 
             //Assert
             Assert.Null(newId);
+            Assert.NotNull(sqlException);
             Assert.Equal(12, sqlException.Class);
             Assert.Equal(255, sqlException.State);
             Assert.Empty(messageList);

@@ -17,10 +17,13 @@ VALUES
   , 50.00
 )
 
+SELECT * FROM dbo.job AS j
+
 UPDATE dbo.job
 SET job_name = N'I just changed this job today.'
 WHERE job_id = 1
 
+SELECT * FROM dbo.job AS j
 
 
 ROLLBACK TRANSACTION

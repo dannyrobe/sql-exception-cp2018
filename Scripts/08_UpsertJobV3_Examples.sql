@@ -1,3 +1,6 @@
+USE SqlExceptionDemo
+GO
+
 -- #4 = new job with duplicate name
 	SELECT * FROM dbo.job
 	--
@@ -30,7 +33,7 @@
 	--
 	SELECT * FROM dbo.job
 	--
-	DECLARE @id3 INT = 3 -- should match @id from above
+	DECLARE @id3 INT = __ENTER_ID__ -- should match @id from above
 
 	EXEC dbo.UpsertJobV3
 		@job_id			=  @id3 OUTPUT

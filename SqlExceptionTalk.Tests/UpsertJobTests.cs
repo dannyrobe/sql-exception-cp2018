@@ -76,8 +76,11 @@ namespace SqlExceptionTalk.Tests
                 newId = SqlData.UpsertJob(newJob);
             });
 
+            _outputHelper.WriteLine("What your log will see...");
             var message = _outputHelper.LogExceptionAccordingly(sqlException)
                 ?? "Generic error message.";
+            _outputHelper.WriteLine("What your user will see...");
+            _outputHelper.WriteLine(message);
 
             //Assert
             Assert.Null(newId);

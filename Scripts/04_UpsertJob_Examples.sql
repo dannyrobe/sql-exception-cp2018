@@ -1,3 +1,9 @@
+USE SqlExceptionDemo
+GO
+
+	SELECT * FROM dbo.job
+	SELECT * FROM dbo.job_type
+
 -- #1 = new job where job type exists
 	DECLARE @id1 INT = NULL
 

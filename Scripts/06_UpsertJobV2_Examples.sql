@@ -1,3 +1,6 @@
+USE SqlExceptionDemo
+GO
+
 -- #3 = new job where job type does not exist (will now create)
 	SELECT * FROM dbo.job_type
 	--
